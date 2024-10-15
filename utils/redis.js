@@ -1,20 +1,12 @@
 const redis = require('redis');
-const promisify = require('util');
 
 class RedisClient {
   constructor() {
-    // Create the Redis client
     this.client = redis.createClient();
 
-    // Handle Redis client errors
     this.client.on('error', (err) => {
-      console.error(`Redis client error: ${err.message}`);
+      console.error(`Redis client error: ${err}`);
     });
-
-    // Promisify Redis client methods for better async handling
-    this.getAsync = promisify(this.client.get).bind(this.client);
-    this.setAsync = promisify(this.client.set).bind(this.client);
-    this.delAsync = promisify(this.client.del).bind(this.client);
   }
 
   /**
@@ -31,7 +23,15 @@ class RedisClient {
    * @returns {Promise<string | null>} The value for the key or null if the key doesn't exist
    */
   async get(key) {
-    return this.getAsync(key);
+    return new Promise((resolve, reject) => {
+      this.client.get(key, (err, reply) => {
+        if (err) {
+          reject(err);
+        } else {
+          resolve(reply);
+        }
+      });
+    });
   }
 
   /**
@@ -42,7 +42,16 @@ class RedisClient {
    * @returns {Promise<void>}
    */
   async set(key, value, duration) {
-    await this.setAsync(key, value, 'EX', duration);
+    return new Promise((resolve, reject) => {
+      this.client.set(key, value,
+        'EX', duration, (err, reply) => {
+          if (err) {
+            reject(err);
+          } else {
+            resolve(reply);
+          }
+        });
+    });
   }
 
   /**
@@ -51,7 +60,15 @@ class RedisClient {
    * @returns {Promise<void>}
    */
   async del(key) {
-    await this.delAsync(key);
+    return new Promise((resolve, reject) => {
+      this.client.del(key, (err, reply) => {
+        if (err) {
+          reject(err);
+        } else {
+          resolve(reply);
+        }
+      });
+    });
   }
 }
 
