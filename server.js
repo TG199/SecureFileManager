@@ -1,6 +1,6 @@
 const express = require('express');
-const { dbClient } = require('./utils/db');
-const { redisClient } = require('./utils/redis');
+const dbClient  = require('./utils/db');
+const  redisClient  = require('./utils/redis');
 const routes = require('./routes');
 
 const app = express();
