@@ -41,11 +41,10 @@ SecureFileManager is a Node.js application designed to manage files with support
   npm run start-worker
   ```
 ### Verify it’s running
-In a new terminal, hit the status endpoint (adjust port if the console shows a different one):
+- In a new terminal, hit the status endpoint (adjust port if the console shows a different one):
 ```bash
-```
 curl http://localhost:5000/status
-
+```
 ## Project Structure
 - `server.js`: Entry point for the Express server
 - `main.js`: Initial connection and statistics test script
@@ -66,3 +65,4 @@ Pull requests and issues are welcome. Please open an issue to discuss any major 
 
 ## License
 This project is licensed under the ISC License.
+ ```
