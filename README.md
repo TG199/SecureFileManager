@@ -43,6 +43,7 @@ SecureFileManager is a Node.js application designed to manage files with support
 ### Verify it’s running
 In a new terminal, hit the status endpoint (adjust port if the console shows a different one):
 ```bash
+```
 curl http://localhost:5000/status
 
 ## Project Structure
